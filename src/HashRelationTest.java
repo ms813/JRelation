@@ -11,7 +11,7 @@ class HashRelationTest {
 
     private Relation<String, String> r;
     private double desiredLoad = 0.75;
-    private String[] a = {"j", "j", "c", "c", "c", "p", "n", "x", "x", "x"};
+    private String[] a = {"j", "j", "c", "c", "c", "p", "n", "k", "k", "k"};
     private String[] b = {"java", "javascript", "c++", "c#", "c", "python", "node", "java", "node", "c"};
 
     @BeforeEach
@@ -33,29 +33,29 @@ class HashRelationTest {
     }
 
     @Test
-    void getX() {
+    void getAllMatchingX() {
         Set<String> s = new TreeSet<>();
         s.add("java");
-        assertNotEquals(s, r.getX("j"), "getX set not equal too few");
+        assertNotEquals(s, r.getAllMatchingX("j"), "getAllMatchingX set not equal too few");
 
         s.add("javascript");
-        assertEquals(s, r.getX("j"), "getX set equal");
+        assertEquals(s, r.getAllMatchingX("j"), "getAllMatchingX set equal");
 
         s.add("junit");
-        assertNotEquals(s, r.getX("j"), "getX set not equal too many");
+        assertNotEquals(s, r.getAllMatchingX("j"), "getAllMatchingX set not equal too many");
     }
 
     @Test
-    void getY() {
+    void getAllMatchingY() {
         Set<String> s = new TreeSet<>();
         s.add("j");
-        assertNotEquals(s, r.getY("java"), "getY set not equal too few");
+        assertNotEquals(s, r.getAllMatchingY("java"), "getAllMatchingY set not equal too few");
 
-        s.add("x");
-        assertEquals(s, r.getY("java"), "getY set equal");
+        s.add("k");
+        assertEquals(s, r.getAllMatchingY("java"), "getAllMatchingY set equal");
 
         s.add("z");
-        assertNotEquals(s, r.getY("java"), "getY set not equal too many");
+        assertNotEquals(s, r.getAllMatchingY("java"), "getAllMatchingY set not equal too many");
     }
 
     @Test
@@ -76,26 +76,26 @@ class HashRelationTest {
     }
 
     @Test
-    void removeAllWithX() {
+    void removeAllMatchingX() {
         assertTrue(r.contains("j", "java"), "RemoveAllWithX before");
         assertTrue(r.contains("j", "javascript"), "RemoveAllWithX before 2");
         assertTrue(r.contains("c", "c"), "RemoveAllWithX before 3");
 
-        r.removeAllWithX("j");
+        r.removeAllMatchingX("j");
         assertFalse(r.contains("j", "java"), "RemoveAllWithX after");
         assertFalse(r.contains("j", "javascript"), "RemoveAllWithX after 2");
         assertTrue(r.contains("c", "c"), "RemoveAllWithX after 3");
     }
 
     @Test
-    void removeAllWithY() {
+    void removeAllMatchingY() {
         assertTrue(r.contains("j", "java"), "RemoveAllWithY before");
-        assertTrue(r.contains("x", "java"), "RemoveAllWithY before 2");
+        assertTrue(r.contains("k", "java"), "RemoveAllWithY before 2");
         assertTrue(r.contains("c", "c"), "RemoveAllWithY before 3");
 
-        r.removeAllWithY("java");
+        r.removeAllMatchingY("java");
         assertFalse(r.contains("j", "java"), "RemoveAllWithY before");
-        assertFalse(r.contains("x", "java"), "RemoveAllWithY before 2");
+        assertFalse(r.contains("k", "java"), "RemoveAllWithY before 2");
         assertTrue(r.contains("c", "c"), "RemoveAllWithY after 3");
     }
 
