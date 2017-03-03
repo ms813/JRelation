@@ -174,13 +174,24 @@ public class HashRelation<X, Y> implements Relation<X, Y> {
 
         Pair<X, Y> curr = bucketsX[hx];
         while (curr != null) {
-
+            if(x.equals(curr.x)){
+                remove(curr.x, curr.y);
+            }
+            curr = curr.next;
         }
     }
 
     @Override
     public void removeAllWithY(Y y) {
+        int hy = hashY(y);
 
+        Pair<Y, X> curr = bucketsY[hy];
+        while(curr != null){
+            if(y.equals(curr.x)){
+                remove(curr.y, curr.x);
+            }
+            curr = curr.next;
+        }
     }
 
     @Override
@@ -226,12 +237,10 @@ public class HashRelation<X, Y> implements Relation<X, Y> {
     }
 
     private int hashX(X x) {
-        System.out.println("Hashing " + x + " to " + Math.abs(this.hasherX.applyAsInt(x) % bucketCount));
         return Math.abs(this.hasherX.applyAsInt(x) % bucketCount);
     }
 
     private int hashY(Y y) {
-        System.out.println("Hashing " + y + " to " + Math.abs(this.hasherY.applyAsInt(y) % bucketCount));
         return Math.abs(this.hasherY.applyAsInt(y) % bucketCount);
     }
 

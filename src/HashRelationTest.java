@@ -23,7 +23,6 @@ class HashRelationTest {
         
         for(int i = 0; i < a.length; i++){
             r.put(a[i], b[i]);
-            r.put(Integer.toString(i), Integer.toString(i*i));
         }
     }
 
@@ -102,12 +101,12 @@ class HashRelationTest {
 
     @Test
     void size(){
-        assertEquals(r.size(), a.length * 2, "Size");
+        assertEquals(r.size(), a.length , "Size");
 
         r.put("g", "groovy");
-        assertEquals(r.size(), a.length * 2 + 1, "Size + 1");
+        assertEquals(r.size(), a.length + 1, "Size + 1");
 
         r.remove("g", "groovy");
-        assertEquals(r.size(), a.length * 2, "Size - 1");
+        assertEquals(r.size(), a.length, "Size - 1");
     }
 }
